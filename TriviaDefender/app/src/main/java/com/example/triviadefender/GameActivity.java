@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
     public static int screenHeight;
     public static int screenWidth;
@@ -22,6 +24,11 @@ public class GameActivity extends AppCompatActivity {
         Intent i = getIntent();
         int in = i.getIntExtra("DIFFICULTY",0);
         System.out.println(in);
+
+        //Gets the Questions from the intent
+        ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
+        System.out.println("Questions Loaded: " + ql.size());
+
         Util util = Util.getInstance();
         util.fullScreenMode(this);
         Util.ScreenWidthHeight swh = util.getScreenDimensions(this);
