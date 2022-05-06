@@ -14,6 +14,8 @@ public class GameActivity extends AppCompatActivity {
     public static int screenWidth;
     private ConstraintLayout layout;
     private MissileMaker missileMaker;
+    private QuestionMaker questionMaker;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -48,6 +50,8 @@ public class GameActivity extends AppCompatActivity {
 
         missileMaker = new MissileMaker(this, screenWidth, screenHeight);
         new Thread(missileMaker).start();
+        questionMaker = new QuestionMaker(this, screenWidth, screenHeight);
+        new Thread(questionMaker).start();
 
     }
 
@@ -56,6 +60,9 @@ public class GameActivity extends AppCompatActivity {
     }
     public void removeMissile(Missile m) {
         missileMaker.removeMissile(m);
+    }
+    public void removeQuestion(Question q) {
+        questionMaker.removeQuestion(q);
     }
     public void applyMissileBlast(Missile missile, int id) {
         missileMaker.applyMissileBlast(missile, id);
@@ -91,6 +98,7 @@ public class GameActivity extends AppCompatActivity {
 
     //TODO: remove this so that the game end by itself
     public void stopGame() {
+        questionMaker.setRunning(false);
         missileMaker.setRunning(false);
         Intent i = new Intent(GameActivity.this, GameOverActivity.class);
         startActivity(i);
