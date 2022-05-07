@@ -7,11 +7,15 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
     public static int screenHeight;
     public static int screenWidth;
     private ConstraintLayout layout;
     private MissileMaker missileMaker;
+    private QuestionMaker questionMaker;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -22,6 +26,11 @@ public class GameActivity extends AppCompatActivity {
         Intent i = getIntent();
         int in = i.getIntExtra("DIFFICULTY",0);
         System.out.println(in);
+
+        //Gets the Questions from the intent
+        ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
+        System.out.println("Questions Loaded: " + ql.size());
+
         Util util = Util.getInstance();
         util.fullScreenMode(this);
         Util.ScreenWidthHeight swh = util.getScreenDimensions(this);
@@ -41,6 +50,8 @@ public class GameActivity extends AppCompatActivity {
 
         missileMaker = new MissileMaker(this, screenWidth, screenHeight);
         new Thread(missileMaker).start();
+        questionMaker = new QuestionMaker(this, screenWidth, screenHeight);
+        new Thread(questionMaker).start();
 
     }
 
@@ -49,6 +60,9 @@ public class GameActivity extends AppCompatActivity {
     }
     public void removeMissile(Missile m) {
         missileMaker.removeMissile(m);
+    }
+    public void removeQuestion(Question q) {
+        questionMaker.removeQuestion(q);
     }
     public void applyMissileBlast(Missile missile, int id) {
         missileMaker.applyMissileBlast(missile, id);
@@ -84,6 +98,7 @@ public class GameActivity extends AppCompatActivity {
 
     //TODO: remove this so that the game end by itself
     public void stopGame() {
+        questionMaker.setRunning(false);
         missileMaker.setRunning(false);
         Intent i = new Intent(GameActivity.this, GameOverActivity.class);
         startActivity(i);
