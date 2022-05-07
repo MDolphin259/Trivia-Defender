@@ -18,6 +18,7 @@ public class GameActivity extends AppCompatActivity {
     private QuestionMaker questionMaker;
     private TextView scoreText, scoreValue;
     private int score = 0;
+    private boolean allBasesGone;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -55,6 +56,7 @@ public class GameActivity extends AppCompatActivity {
             return false;
         });
          */
+        allBasesGone = false;
 
         missileMaker = new MissileMaker(this, screenWidth, screenHeight);
         new Thread(missileMaker).start();
@@ -108,6 +110,10 @@ public class GameActivity extends AppCompatActivity {
         }
 
          */
+    }
+
+    public boolean checkAllBasesGone(){
+        return allBasesGone;
     }
 
     //TODO: remove this so that the game end by itself
