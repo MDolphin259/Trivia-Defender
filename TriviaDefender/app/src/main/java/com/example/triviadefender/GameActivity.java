@@ -2,7 +2,8 @@ package com.example.triviadefender;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
+import android.util.Log;
+import android.widget.TextView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ public class GameActivity extends AppCompatActivity {
     private ConstraintLayout layout;
     private MissileMaker missileMaker;
     private QuestionMaker questionMaker;
+    private TextView scoreText, scoreValue;
+    private int score = 0;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -37,6 +40,11 @@ public class GameActivity extends AppCompatActivity {
         screenHeight = swh.getHeight();
         screenWidth = swh.getWidth();
         layout = findViewById(R.id.gameLayout);
+
+        //Print score text to the screen -- using activity_game.xml
+        scoreText = (TextView) findViewById(R.id.scoreText);
+        scoreValue = (TextView) findViewById(R.id.scoreValue);
+        scoreValue.setText("0");
 
         //TODO: fix the handler to recognize touches on the screen
         /*
@@ -67,7 +75,13 @@ public class GameActivity extends AppCompatActivity {
     public void applyMissileBlast(Missile missile, int id) {
         missileMaker.applyMissileBlast(missile, id);
     }
-
+    //method to increment the score
+    public void incrementScore(){
+        score+=1;
+        //Log to the console
+        Log.i("score",String.valueOf(score));
+        scoreValue.setText(String.valueOf(score));
+    }
 
 
     public void handleTouch(float x2, float y2) {
