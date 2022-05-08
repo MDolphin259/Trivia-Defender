@@ -6,7 +6,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,9 @@ public class GameActivity extends AppCompatActivity {
     private int score = 0;
     private boolean allBasesGone;
 
+    //Instantiate list of available cannons
+    public static ArrayList<ImageView> activeCannons = new ArrayList<>();
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -27,6 +32,17 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        //Instantiate cannons on create
+        ImageView cannon1 = findViewById(R.id.Cannon1);
+        ImageView cannon2 = findViewById(R.id.Cannon2);
+        ImageView cannon3 = findViewById(R.id.Cannon3);
+
+        //Add available cannons to list of available cannons
+        activeCannons.add(cannon1);
+        activeCannons.add(cannon2);
+        activeCannons.add(cannon3);
+
+        //Get intent from MainActivity to set game difficulty
         Intent i = getIntent();
         int in = i.getIntExtra("DIFFICULTY",0);
         System.out.println(in);
