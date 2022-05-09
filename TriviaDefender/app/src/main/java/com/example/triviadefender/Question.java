@@ -57,6 +57,7 @@ public class Question {
                         }
                     });
                     alpha.start();
+                    PopUpHandler.CallPopUp(gameActivity); //TODO: THIS WAS USED JUST FOR TESTING. DELETE LATER!!!
                     Log.d(TAG, "run: NUM VIEWS " +
                             gameActivity.getLayout().getChildCount());
                 });
