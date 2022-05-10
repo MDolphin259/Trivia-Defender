@@ -1,8 +1,12 @@
 package com.example.triviadefender;
 
+import static com.android.volley.VolleyLog.TAG;
+import static com.example.triviadefender.CannonFire.activeShotCount;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.TextView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -65,14 +69,14 @@ public class GameActivity extends AppCompatActivity {
         scoreValue.setText("0");
 
         //TODO: fix the handler to recognize touches on the screen
-        /*
         layout.setOnTouchListener((view, motionEvent) -> {
+            System.out.println("we are in setOnTouchListener");
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 handleTouch(motionEvent.getX(), motionEvent.getY());
             }
             return false;
         });
-         */
+
         allBasesGone = false;
 
         missileMaker = new MissileMaker(this, screenWidth, screenHeight);
@@ -104,29 +108,32 @@ public class GameActivity extends AppCompatActivity {
 
 
     public void handleTouch(float x2, float y2) {
-        /*
         double screenPortion = screenHeight*0.8;
         if(y2>screenPortion) return;
-        if(interceptorCount>2) return;
-        ImageView closestBase = null;
+        System.out.println("we are in handleTouch");
+
+        //interceptor count refers to the number of active shots fired at missiles
+        //Is reduced if the shot connects with a missile
+
+        if(activeShotCount>2) return;
+        ImageView closestCannon = null;
         float maxDistance = Float.MAX_VALUE;
-        for(ImageView iv: bases){
+        for(ImageView iv: activeCannons){
             double x1 = iv.getX() + (0.5 * iv.getWidth());
             double y1 = iv.getY() + (0.5 * iv.getHeight());
             float f = (float) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
             if(f<maxDistance) {
                 maxDistance = f;
-                closestBase = iv;
+                closestCannon = iv;
             }
         }
-        if(closestBase!=null){
+        if(closestCannon!=null){
             Log.d(TAG, "handleTouch: " + maxDistance);
-            Interceptor i = new Interceptor(this,  (float) (closestBase.getX()), (float) (closestBase.getY() - 30), x2, y2);
+            CannonFire i = new CannonFire(this,  (float) (closestCannon.getX()), (float) (closestCannon.getY() - 30), x2, y2);
+            System.out.println("HELLO THIS IS WHAT YOU'RE LOOKING FOR " + i);
             SoundPlayer.getInstance().start("launch_interceptor");
             i.launch();
         }
-
-         */
     }
 
     public boolean checkAllBasesGone(){
@@ -139,5 +146,9 @@ public class GameActivity extends AppCompatActivity {
         missileMaker.setRunning(false);
         Intent i = new Intent(GameActivity.this, GameOverActivity.class);
         startActivity(i);
+    }
+
+    public void applyInterceptorHit(CannonFire cannonFire, int id) {
+        missileMaker.applyInterceptorBlast(cannonFire, id);
     }
 }
