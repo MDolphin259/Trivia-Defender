@@ -69,7 +69,7 @@ public class MissileMaker implements Runnable {
 
             if(missileCount > MISSILES_PER_LEVEL){
                 //TODO: remove this line:
-                gameActivity.stopGame();
+                //gameActivity.stopGame();
 
                 missileCount = 0;
                 delay -= 500;
@@ -144,8 +144,8 @@ public class MissileMaker implements Runnable {
             */
         }
     }
-/*
-    public void applyInterceptorBlast(Interceptor interceptor, int id) {
+
+    public void applyInterceptorBlast(CannonFire interceptor, int id) {
         Log.d(TAG, "applyInterceptorBlast: -------------------------- " + id);
 
         float x1 = interceptor.getX();
@@ -169,7 +169,10 @@ public class MissileMaker implements Runnable {
 
             if (f < 120) {
                 SoundPlayer.getInstance().start("interceptor_hit_missile");
-                mainActivity.incrementScore();
+
+
+                //TODO: Investigate this/Pull Darrin's code
+                //gameActivity.incrementScore();
                 Log.d(TAG, "applyInterceptorBlast:    Hit: " + f);
                 m.interceptorBlast(x2, y2);
                 nowGone.add(m);
@@ -184,5 +187,4 @@ public class MissileMaker implements Runnable {
         }
     }
 
- */
 }
