@@ -24,6 +24,7 @@ public class CannonFire {
 
     //Instantiates Coordinates and the number provided to each taken shot
     CannonFire(GameActivity gameActivity, float startX, float startY, float endX, float endY) {
+        System.out.println("hello");
         this.gameActivity = gameActivity;
         System.out.println(gameActivity);
         this.startX = startX;
