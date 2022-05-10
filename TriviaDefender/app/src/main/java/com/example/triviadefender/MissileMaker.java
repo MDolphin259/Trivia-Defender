@@ -19,7 +19,6 @@ public class MissileMaker implements Runnable {
     private int MISSILES_PER_LEVEL = 10;
     private static final int SLEEP_BETWEEN_LEVELS = 2000;
     private long delay = 5000;
-    private boolean missileFlag = false;
 
 
     public static ArrayList<ImageView> bases = new ArrayList<>();
