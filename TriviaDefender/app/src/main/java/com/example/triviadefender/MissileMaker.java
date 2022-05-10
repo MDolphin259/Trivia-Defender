@@ -26,17 +26,6 @@ public class MissileMaker implements Runnable {
         this.gameActivity = gameActivity;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
-
-        //TODO: fix this once we add bases
-        /*
-        ImageView base1 = gameActivity.findViewById(R.id.imageView);
-        ImageView base2 = gameActivity.findViewById(R.id.imageView2);
-        ImageView base3 = gameActivity.findViewById(R.id.imageView3);
-        bases.add(base1);
-        bases.add(base2);
-        bases.add(base3);
-
-         */
     }
 
     void setRunning(boolean running) {
@@ -145,8 +134,7 @@ public class MissileMaker implements Runnable {
         }
     }
 
-    /*
-    public void applyInterceptorBlast(Interceptor interceptor, int id) {
+    public void applyInterceptorBlast(CannonFire interceptor, int id) {
         Log.d(TAG, "applyInterceptorBlast: -------------------------- " + id);
 
         float x1 = interceptor.getX();
@@ -170,7 +158,10 @@ public class MissileMaker implements Runnable {
 
             if (f < 120) {
                 SoundPlayer.getInstance().start("interceptor_hit_missile");
-                gameActivity.incrementScore();
+
+
+                //TODO: Investigate this/Pull Darrin's code
+                //gameActivity.incrementScore();
                 Log.d(TAG, "applyInterceptorBlast:    Hit: " + f);
                 m.interceptorBlast(x2, y2);
                 nowGone.add(m);
@@ -184,6 +175,4 @@ public class MissileMaker implements Runnable {
             activeMissiles.remove(m);
         }
     }
-
-*/
 }
