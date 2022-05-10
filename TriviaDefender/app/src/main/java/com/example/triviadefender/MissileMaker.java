@@ -145,7 +145,9 @@ public class MissileMaker implements Runnable {
         }
     }
 
+
     public void applyInterceptorBlast(CannonFire interceptor, int id) {
+
         Log.d(TAG, "applyInterceptorBlast: -------------------------- " + id);
 
         float x1 = interceptor.getX();
@@ -171,20 +173,8 @@ public class MissileMaker implements Runnable {
                 SoundPlayer.getInstance().start("interceptor_hit_missile");
 
 
+
                 //TODO: Investigate this/Pull Darrin's code
                 //gameActivity.incrementScore();
-                Log.d(TAG, "applyInterceptorBlast:    Hit: " + f);
-                m.interceptorBlast(x2, y2);
-                nowGone.add(m);
-            }
-
-            Log.d(TAG, "applyInterceptorBlast: --------------------------");
-
-        }
-
-        for (Missile m : nowGone) {
-            activeMissiles.remove(m);
-        }
-    }
 
 }

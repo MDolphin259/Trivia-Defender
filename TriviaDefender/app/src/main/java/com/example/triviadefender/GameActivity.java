@@ -5,7 +5,8 @@ import static com.example.triviadefender.CannonFire.activeShotCount;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
+import android.util.Log;
+import android.widget.TextView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.Image;
@@ -22,6 +23,9 @@ public class GameActivity extends AppCompatActivity {
     private ConstraintLayout layout;
     private MissileMaker missileMaker;
     private QuestionMaker questionMaker;
+    private TextView scoreText, scoreValue;
+    private int score = 0;
+    private boolean allBasesGone;
 
     //Instantiate list of available cannons
     public static ArrayList<ImageView> activeCannons = new ArrayList<>();
@@ -51,6 +55,7 @@ public class GameActivity extends AppCompatActivity {
         //Gets the Questions from the intent
         ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
         System.out.println("Questions Loaded: " + ql.size());
+        PopUpHandler.setTrivia(ql);
 
         Util util = Util.getInstance();
         util.fullScreenMode(this);
@@ -58,6 +63,11 @@ public class GameActivity extends AppCompatActivity {
         screenHeight = swh.getHeight();
         screenWidth = swh.getWidth();
         layout = findViewById(R.id.gameLayout);
+
+        //Print score text to the screen -- using activity_game.xml
+        scoreText = (TextView) findViewById(R.id.scoreText);
+        scoreValue = (TextView) findViewById(R.id.scoreValue);
+        scoreValue.setText("0");
 
         //TODO: fix the handler to recognize touches on the screen
 
@@ -68,67 +78,3 @@ public class GameActivity extends AppCompatActivity {
             }
             return false;
         });
-
-        missileMaker = new MissileMaker(this, screenWidth, screenHeight);
-        new Thread(missileMaker).start();
-        questionMaker = new QuestionMaker(this, screenWidth, screenHeight);
-        new Thread(questionMaker).start();
-
-    }
-
-    public ConstraintLayout getLayout() {
-        return layout;
-    }
-    public void removeMissile(Missile m) {
-        missileMaker.removeMissile(m);
-    }
-    public void removeQuestion(Question q) {
-        questionMaker.removeQuestion(q);
-    }
-    public void applyMissileBlast(Missile missile, int id) {
-        missileMaker.applyMissileBlast(missile, id);
-    }
-
-
-
-    public void handleTouch(float x2, float y2) {
-        double screenPortion = screenHeight*0.8;
-        if(y2>screenPortion) return;
-        System.out.println("we are in handleTouch");
-
-        //interceptor count refers to the number of active shots fired at missiles
-        //Is reduced if the shot connects with a missile
-
-        if(activeShotCount>2) return;
-        ImageView closestCannon = null;
-        float maxDistance = Float.MAX_VALUE;
-        for(ImageView iv: activeCannons){
-            double x1 = iv.getX() + (0.5 * iv.getWidth());
-            double y1 = iv.getY() + (0.5 * iv.getHeight());
-            float f = (float) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-            if(f<maxDistance) {
-                maxDistance = f;
-                closestCannon = iv;
-            }
-        }
-        if(closestCannon!=null){
-            Log.d(TAG, "handleTouch: " + maxDistance);
-            CannonFire i = new CannonFire(this,  (float) (closestCannon.getX()), (float) (closestCannon.getY() - 30), x2, y2);
-            System.out.println("HELLO THIS IS WHAT YOU'RE LOOKING FOR " + i);
-            SoundPlayer.getInstance().start("launch_interceptor");
-            i.launch();
-        }
-    }
-
-    //TODO: remove this so that the game end by itself
-
-    public void stopGame() {
-        questionMaker.setRunning(false);
-        missileMaker.setRunning(false);
-        Intent i = new Intent(GameActivity.this, GameOverActivity.class);
-        startActivity(i);
-    }
-    public void applyInterceptorHit(CannonFire cannonFire, int id) {
-        missileMaker.applyInterceptorBlast(cannonFire, id);
-    }
-}
