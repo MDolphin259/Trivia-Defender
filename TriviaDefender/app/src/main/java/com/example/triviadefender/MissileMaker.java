@@ -19,6 +19,8 @@ public class MissileMaker implements Runnable {
     private int MISSILES_PER_LEVEL = 10;
     private static final int SLEEP_BETWEEN_LEVELS = 2000;
     private long delay = 5000;
+    private boolean missileFlag = false;
+
 
     public static ArrayList<ImageView> bases = new ArrayList<>();
 
@@ -118,6 +120,7 @@ public class MissileMaker implements Runnable {
                 missile.missileBlast(x2, y2); //blast destroy base
                 baseToRemove = iv;
                 gameActivity.getLayout().removeView(iv);
+
             }
 
             Log.d(TAG, "applyMissileBlast: --------------------------");
@@ -134,11 +137,13 @@ public class MissileMaker implements Runnable {
         }
     }
 
+
     public void applyInterceptorBlast(CannonFire interceptor, int id) {
         Log.d(TAG, "applyInterceptorBlast: -------------------------- " + id);
 
         float x1 = interceptor.getX();
         float y1 = interceptor.getY();
+
 
         Log.d(TAG, "applyInterceptorBlast: INTERCEPTOR: " + x1 + ", " + y1);
 
@@ -159,9 +164,10 @@ public class MissileMaker implements Runnable {
             if (f < 120) {
                 SoundPlayer.getInstance().start("interceptor_hit_missile");
 
-
                 //TODO: Investigate this/Pull Darrin's code
-                //gameActivity.incrementScore();
+                //boolean flag to send back to incrementScore
+                gameActivity.incrementScore(true);
+
                 Log.d(TAG, "applyInterceptorBlast:    Hit: " + f);
                 m.interceptorBlast(x2, y2);
                 nowGone.add(m);

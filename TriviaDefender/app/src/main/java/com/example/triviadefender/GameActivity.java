@@ -98,9 +98,21 @@ public class GameActivity extends AppCompatActivity {
     public void applyMissileBlast(Missile missile, int id) {
         missileMaker.applyMissileBlast(missile, id);
     }
-    //method to increment the score
-    public void incrementScore(){
-        score+=1;
+
+    //method to increment the score using a boolean flag to
+    //detect type of icon object
+    public void incrementScore(boolean missileFlag){
+
+        //if bullet collides with missile
+        if (missileFlag == true) {
+            score += 1;
+        }
+
+        //if bullet collides with questionMark
+        else {
+            score+=2;
+        }
+
         //Log to the console
         Log.i("score",String.valueOf(score));
         scoreValue.setText(String.valueOf(score));
@@ -115,6 +127,7 @@ public class GameActivity extends AppCompatActivity {
         //interceptor count refers to the number of active shots fired at missiles
         //Is reduced if the shot connects with a missile
 
+
         if(activeShotCount>2) return;
         ImageView closestCannon = null;
         float maxDistance = Float.MAX_VALUE;
@@ -125,6 +138,7 @@ public class GameActivity extends AppCompatActivity {
             if(f<maxDistance) {
                 maxDistance = f;
                 closestCannon = iv;
+
             }
         }
         if(closestCannon!=null){
@@ -133,6 +147,7 @@ public class GameActivity extends AppCompatActivity {
             System.out.println("HELLO THIS IS WHAT YOU'RE LOOKING FOR " + i);
             SoundPlayer.getInstance().start("launch_interceptor");
             i.launch();
+
         }
     }
 
