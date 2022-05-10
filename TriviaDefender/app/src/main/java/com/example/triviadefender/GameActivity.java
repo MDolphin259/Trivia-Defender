@@ -2,7 +2,8 @@ package com.example.triviadefender;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
+import android.util.Log;
+import android.widget.TextView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.Image;
@@ -17,6 +18,9 @@ public class GameActivity extends AppCompatActivity {
     private ConstraintLayout layout;
     private MissileMaker missileMaker;
     private QuestionMaker questionMaker;
+    private TextView scoreText, scoreValue;
+    private int score = 0;
+    private boolean allBasesGone;
 
     //Instantiate list of available cannons
     public static ArrayList<ImageView> activeCannons = new ArrayList<>();
@@ -46,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
         //Gets the Questions from the intent
         ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
         System.out.println("Questions Loaded: " + ql.size());
+        PopUpHandler.setTrivia(ql);
 
         Util util = Util.getInstance();
         util.fullScreenMode(this);
@@ -53,6 +58,11 @@ public class GameActivity extends AppCompatActivity {
         screenHeight = swh.getHeight();
         screenWidth = swh.getWidth();
         layout = findViewById(R.id.gameLayout);
+
+        //Print score text to the screen -- using activity_game.xml
+        scoreText = (TextView) findViewById(R.id.scoreText);
+        scoreValue = (TextView) findViewById(R.id.scoreValue);
+        scoreValue.setText("0");
 
         //TODO: fix the handler to recognize touches on the screen
         /*
@@ -63,6 +73,7 @@ public class GameActivity extends AppCompatActivity {
             return false;
         });
          */
+        allBasesGone = false;
 
         missileMaker = new MissileMaker(this, screenWidth, screenHeight);
         new Thread(missileMaker).start();
@@ -83,7 +94,13 @@ public class GameActivity extends AppCompatActivity {
     public void applyMissileBlast(Missile missile, int id) {
         missileMaker.applyMissileBlast(missile, id);
     }
-
+    //method to increment the score
+    public void incrementScore(){
+        score+=1;
+        //Log to the console
+        Log.i("score",String.valueOf(score));
+        scoreValue.setText(String.valueOf(score));
+    }
 
 
     public void handleTouch(float x2, float y2) {
@@ -110,6 +127,10 @@ public class GameActivity extends AppCompatActivity {
         }
 
          */
+    }
+
+    public boolean checkAllBasesGone(){
+        return allBasesGone;
     }
 
     //TODO: remove this so that the game end by itself

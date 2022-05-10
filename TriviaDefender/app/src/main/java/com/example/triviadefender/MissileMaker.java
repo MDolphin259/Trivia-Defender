@@ -144,7 +144,8 @@ public class MissileMaker implements Runnable {
             */
         }
     }
-/*
+
+    /*
     public void applyInterceptorBlast(Interceptor interceptor, int id) {
         Log.d(TAG, "applyInterceptorBlast: -------------------------- " + id);
 
@@ -169,7 +170,7 @@ public class MissileMaker implements Runnable {
 
             if (f < 120) {
                 SoundPlayer.getInstance().start("interceptor_hit_missile");
-                mainActivity.incrementScore();
+                gameActivity.incrementScore();
                 Log.d(TAG, "applyInterceptorBlast:    Hit: " + f);
                 m.interceptorBlast(x2, y2);
                 nowGone.add(m);
@@ -184,5 +185,5 @@ public class MissileMaker implements Runnable {
         }
     }
 
- */
+*/
 }

@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The MainActivity is the first screen that the user sees.
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                             String answer = a.get(j).toString();
                             al.add(answer);
                         }
+                        Collections.shuffle(al);
                         TriviaQuestion news = new TriviaQuestion(q,c,al);
                         newsList.add(news);
                     }
