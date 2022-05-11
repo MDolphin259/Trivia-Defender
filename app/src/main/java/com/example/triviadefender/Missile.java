@@ -51,7 +51,6 @@ public class Missile {
                         hitTheGround();
                         gameActivity.getLayout().removeView(imageView);
                         gameActivity.removeMissile(Missile.this);
-                        gameActivity.incrementScore();
                     }
 
                     Log.d(TAG, "run: NUM VIEWS " +
