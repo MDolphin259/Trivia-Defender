@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity {
         //Gets the Questions from the intent
         ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
         System.out.println("Questions Loaded: " + ql.size());
-        PopUpHandler.setTrivia(ql);
+        PopUpHandler.setTrivia(ql); //retrieves the question list
 
         Util util = Util.getInstance();
         util.fullScreenMode(this);
@@ -165,5 +165,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void applyInterceptorHit(CannonFire cannonFire, int id) {
         missileMaker.applyInterceptorBlast(cannonFire, id);
+        questionMaker.applyInterceptorBlast(cannonFire, id); //To check if any questions got hit
     }
 }

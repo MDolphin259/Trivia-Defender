@@ -107,45 +107,44 @@ public class QuestionMaker implements Runnable {
     }
 
  */
-/*
-    public void applyInterceptorBlast(Interceptor interceptor, int id) {
-        Log.d(TAG, "applyInterceptorBlast: -------------------------- " + id);
 
-        float x1 = interceptor.getX();
-        float y1 = interceptor.getY();
+    //Handles calculations for distance between question and interceptor/cannonfire
+public void applyInterceptorBlast(CannonFire interceptor, int id) {
+    Log.d(TAG, "applyInterceptorBlast: -------------------------- " + id);
 
-        Log.d(TAG, "applyInterceptorBlast: INTERCEPTOR: " + x1 + ", " + y1);
+    float x1 = interceptor.getX();
+    float y1 = interceptor.getY();
 
-        ArrayList<Missile> nowGone = new ArrayList<>();
-        ArrayList<Missile> temp = new ArrayList<>(activeMissiles);
+    Log.d(TAG, "applyInterceptorBlast: INTERCEPTOR: " + x1 + ", " + y1);
 
-        for (Missile m : temp) {
+    ArrayList<Question> nowGone = new ArrayList<>();
+    ArrayList<Question> temp = new ArrayList<Question>(activeQuestions);
 
-            float x2 = (int) (m.getX() + (0.5 * m.getWidth()));
-            float y2 = (int) (m.getY() + (0.5 * m.getHeight()));
+    for (Question q : temp) {
 
-            Log.d(TAG, "applyInterceptorBlast:    Missile: " + x2 + ", " + y2);
+        float x2 = (int) (q.getX() + (0.5 * q.getWidth()));
+        float y2 = (int) (q.getY() + (0.5 * q.getHeight()));
+
+        Log.d(TAG, "applyInterceptorBlast:    Missile: " + x2 + ", " + y2);
 
 
-            float f = (float) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-            Log.d(TAG, "applyInterceptorBlast:    DIST: " + f);
+        float f = (float) Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+        Log.d(TAG, "applyInterceptorBlast:    DIST: " + f);
 
-            if (f < 120) {
-                SoundPlayer.getInstance().start("interceptor_hit_missile");
-                mainActivity.incrementScore();
-                Log.d(TAG, "applyInterceptorBlast:    Hit: " + f);
-                m.interceptorBlast(x2, y2);
-                nowGone.add(m);
-            }
-
-            Log.d(TAG, "applyInterceptorBlast: --------------------------");
-
+        if (f < 120) {
+            SoundPlayer.getInstance().start("interceptor_hit_question");
+            //gameActivity.incrementScore();
+            Log.d(TAG, "applyInterceptorBlast:    Hit: " + f);
+            q.interceptorBlast(x2, y2); //Used for animation fade
+            nowGone.add(q);
         }
 
-        for (Missile m : nowGone) {
-            activeMissiles.remove(m);
-        }
+        Log.d(TAG, "applyInterceptorBlast: --------------------------");
+
     }
 
- */
+    for (Question q : nowGone) {
+        activeQuestions.remove(q);
+    }
+}
 }

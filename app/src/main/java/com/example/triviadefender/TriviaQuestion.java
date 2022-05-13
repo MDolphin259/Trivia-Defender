@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class TriviaQuestion implements java.io.Serializable{
 
-    private String question;
-    private String correct;
-    private ArrayList<String> answers = new ArrayList<String>();
+    private String question; //The question
+    private String correct; //The right answer
+    private ArrayList<String> answers = new ArrayList<String>(); //The other answers including the right answer
 
     TriviaQuestion(String q, String c, ArrayList<String> a){
         this.question = formatter(q);
@@ -31,6 +31,7 @@ public class TriviaQuestion implements java.io.Serializable{
         return answers;
     }
 
+    //This is used to convert html into the proper special characters
     public String formatter(String element){
         String results = StringEscapeUtils.unescapeHtml4(element);
         return results;

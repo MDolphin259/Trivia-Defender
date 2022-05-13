@@ -57,7 +57,6 @@ public class Question {
                         }
                     });
                     alpha.start();
-                    PopUpHandler.CallPopUp(gameActivity); //TODO: THIS WAS USED JUST FOR TESTING. DELETE LATER!!!
                     Log.d(TAG, "run: NUM VIEWS " +
                             gameActivity.getLayout().getChildCount());
                 });
@@ -105,6 +104,7 @@ public class Question {
 
     void interceptorBlast(float x, float y){
         aSet.cancel();
+        PopUpHandler.CallPopUp(gameActivity); //Makes a pop up for a trivia question
 /*
         final ImageView iv = new ImageView(mainActivity);
         iv.setImageResource(R.drawable.explode);
