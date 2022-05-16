@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         //Sets up URL for request
         String URL = "https://opentdb.com/api.php";
         Uri.Builder buildURL = Uri.parse(URL).buildUpon();
-        buildURL.appendQueryParameter("amount", "10");
-        buildURL.appendQueryParameter("category", "23");
+        buildURL.appendQueryParameter("amount", "10"); //to set up an amount
+        buildURL.appendQueryParameter("category", "23"); //to set up a category
         String urlToUse = buildURL.build().toString();
         ArrayList<TriviaQuestion> newsList = new ArrayList<TriviaQuestion>();
 
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         TriviaQuestion news = new TriviaQuestion(q,c,al);
                         newsList.add(news);
                     }
+                    //After we are done adding questions, we send the list to be added to qList
                     addQuestionList(newsList);
                 } catch (Exception e) {
                     System.out.println("Error in response Volley");
@@ -118,10 +119,9 @@ public class MainActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
+    //Establishes an ArrayList for qlist first before launching the game
     private void addQuestionList(ArrayList<TriviaQuestion> q){
-        //System.out.println(q.size());
         this.qList = q;
-        //System.out.println(qList);
         launchGame();
     }
 
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(MainActivity.this, GameActivity.class);
         //TODO: send the difficulty level setup to GameActivity.class
         i.putExtra("DIFFICULTY", 5000);
-        i.putExtra("QUESTIONS", qList);
+        i.putExtra("QUESTIONS", qList); //sends the list of trivia questions to the GameActivity
 
         startActivity(i);
     }
