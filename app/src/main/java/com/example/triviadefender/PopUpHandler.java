@@ -29,37 +29,43 @@ public class PopUpHandler {
     public static void CallPopUp(GameActivity ga){
         if(popUpActive == false){
             popUpActive = true;
+            ga.pauseGame(); //The game is about to create a pop up that will fill the screen so we need to pause projectiles
             ShowPopUp(ga);
         }
     }
 
     //This is the method to create the popup with the question and the answers
     private static void ShowPopUp(GameActivity ga){
-        final String[] abResults = new String[1];
         AlertDialog.Builder ab = new AlertDialog.Builder(ga);
 
+        //Selects a random question to use
         int index = new Random().nextInt(tql.size() - 1);
         TriviaQuestion puq = tql.get(index);;
 
-
+        //Used to make an array from an ArrayList since that is what the pop up methods for android uses
         String[] answers = new String[puq.getAnswers().size()];
         for(int i = 0; i < puq.getAnswers().size(); i++){
             answers[i] = puq.getAnswers().get(i);
         }
         ab.setTitle(puq.getQuestion());
+
+        //This section is to handle when Players choose one of the options in the trivia question
         ab.setItems(answers, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int which){ //USed to handle which item was selected
-                String item = answers[which];
-                String results = item + " is Correct!";
+            public void onClick(DialogInterface dialogInterface, int which){ //Used to handle which item was selected
+                //TODO: Maybe place scoring for questions in this section. Feel free to change logic
+                String item = answers[which]; //gets the item that the player pressed
+                String results = item + " is Correct!"; //Sets up a String for results
+                //If there choice was wrong, then we change the results String
                 if(item.equals(puq.getCorrect()) == false){
                     results = item + " is Wrong. The answer is " + puq.getCorrect();
                 }
-                abResults[0] = results;
                 System.out.println(results);
-                callSecond(abResults[0], ga);
+                callSecond(results, ga);
             }
         });
+
+        //These lines are used to show the trivia question pop up
         ab.setCancelable(false);
         AlertDialog ad = ab.create();
         ad.show();
@@ -70,12 +76,17 @@ public class PopUpHandler {
     private static void callSecond(String results, GameActivity ga) {
         AlertDialog.Builder ab2 = new AlertDialog.Builder(ga);
         ab2.setTitle(results);
+
+        //Line to set up result pop up
         ab2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                ga.resumeGame(); //After a player presses okay the pop up is gone so we need to resume projectiles
                 popUpActive = false;
             }
         });
+
+        //These lines are used to show the results pop up
         ab2.setCancelable(false);
         ab2.show();
 

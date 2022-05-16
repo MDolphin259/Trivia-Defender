@@ -80,6 +80,14 @@ public class Question {
         return (float) (180.0f - angle);
     }
 
+    void pause() {
+        aSet.pause();
+    } //Used to pause animation for a single question
+
+    void resume(){
+        aSet.resume();
+    } //Used to resume animation for a single question
+
     void stop() {
         //TODO: fix this
         //aSet.cancel();
