@@ -25,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView scoreText, scoreValue;
     private int score = 0;
     private boolean allBasesGone;
+    private int questionMarkScore;
 
     //Instantiate list of available cannons
     public static ArrayList<ImageView> activeCannons = new ArrayList<>();
@@ -47,9 +48,9 @@ public class GameActivity extends AppCompatActivity {
         activeCannons.add(cannon3);
 
         //Get intent from MainActivity to set game difficulty
-        Intent i = getIntent();
-        int in = i.getIntExtra("DIFFICULTY",0);
-        System.out.println(in);
+         Intent i = getIntent();
+         questionMarkScore = i.getIntExtra("DIFFICULTY",1);
+         System.out.println(questionMarkScore);
 
         //Gets the Questions from the intent
         ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
@@ -99,18 +100,22 @@ public class GameActivity extends AppCompatActivity {
         missileMaker.applyMissileBlast(missile, id);
     }
 
+
     //method to increment the score using a boolean flag to
     //detect type of icon object
     public void incrementScore(boolean missileFlag){
+
 
         //if bullet collides with missile
         if (missileFlag == true) {
             score += 1;
         }
 
-        //if bullet collides with questionMark
-        else {
-            score+=2;
+        //call questionMarkScoring to detect scoring based on difficulty level and if
+        //user answered question correct to update the score -- call from PopUpHandler method
+
+        if(missileFlag == false) {
+            score+=questionMarkScore;
         }
 
         //Log to the console

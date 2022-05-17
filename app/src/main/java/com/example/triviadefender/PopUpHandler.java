@@ -52,14 +52,17 @@ public class PopUpHandler {
         //This section is to handle when Players choose one of the options in the trivia question
         ab.setItems(answers, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int which){ //Used to handle which item was selected
-                //TODO: Maybe place scoring for questions in this section. Feel free to change logic
-                String item = answers[which]; //gets the item that the player pressed
-                String results = item + " is Correct!"; //Sets up a String for results
-                //If there choice was wrong, then we change the results String
-                if(item.equals(puq.getCorrect()) == false){
-                    results = item + " is Wrong. The answer is " + puq.getCorrect();
+            public void onClick(DialogInterface dialogInterface, int which){ //USed to handle which item was selected
+                String item = answers[which];
+
+                String results = item + " is Wrong. The answer is " + puq.getCorrect();
+
+                //if answer to question is correct --- call incrementScore
+                if(item.equals(puq.getCorrect()) == true){
+                    results = item + " is Correct!";
+                    ga.incrementScore(false);
                 }
+
                 System.out.println(results);
                 callSecond(results, ga);
             }
