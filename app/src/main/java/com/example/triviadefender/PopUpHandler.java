@@ -51,13 +51,20 @@ public class PopUpHandler {
             @Override
             public void onClick(DialogInterface dialogInterface, int which){ //USed to handle which item was selected
                 String item = answers[which];
-                String results = item + " is Correct!";
-                if(item.equals(puq.getCorrect()) == false){
-                    results = item + " is Wrong. The answer is " + puq.getCorrect();
+
+                String results = item + " is Wrong. The answer is " + puq.getCorrect();
+
+                //if answer to question is correct --- call incrementScore
+                if(item.equals(puq.getCorrect()) == true){
+                    results = item + " is Correct!";
+                    ga.incrementScore(false);
                 }
+
                 abResults[0] = results;
                 System.out.println(results);
+
                 callSecond(abResults[0], ga);
+
             }
         });
         ab.setCancelable(false);

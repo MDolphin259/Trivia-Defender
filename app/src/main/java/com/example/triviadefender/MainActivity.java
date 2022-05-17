@@ -28,6 +28,9 @@ import java.util.Collections;
  */
 public class MainActivity extends AppCompatActivity {
 
+    //create field variable to initialize the difficulty
+    public int difficulty = 1;
+
     public ArrayList<TriviaQuestion> qList = new ArrayList<TriviaQuestion>();
 
     @Override
@@ -42,12 +45,17 @@ public class MainActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.easyButton:
                 //TODO: easy setup
+                difficulty = 1;
+
                 break;
             case R.id.mediumButton:
                 //TODO: medium setup
+                difficulty = 2;
+
                 break;
             case R.id.hardButton:
                 //TODO: hard setup
+                difficulty = 3;
                 break;
         }
         //Calls the API After a button is pressed
@@ -125,12 +133,13 @@ public class MainActivity extends AppCompatActivity {
         launchGame();
     }
 
+
+
     private void launchGame(){
         Intent i = new Intent(MainActivity.this, GameActivity.class);
         //TODO: send the difficulty level setup to GameActivity.class
-        i.putExtra("DIFFICULTY", 5000);
+        i.putExtra("DIFFICULTY", difficulty);
         i.putExtra("QUESTIONS", qList); //sends the list of trivia questions to the GameActivity
-
         startActivity(i);
     }
 }
