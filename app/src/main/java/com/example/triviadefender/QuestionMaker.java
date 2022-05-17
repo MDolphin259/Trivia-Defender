@@ -31,24 +31,54 @@ public class QuestionMaker implements Runnable {
         }
     }
 
+    //Needed to call method to pause Questions for all Questions on the screen
+    void pauseQuestions(){
+        ArrayList<Question> temp = new ArrayList<>(activeQuestions);
+        for (Question q : temp){
+            q.pause();
+        }
+    }
+
+    //Needed to call method to resume Questions for all Questiosn on the screen
+    void resumeQuestions(){
+        ArrayList<Question> temp = new ArrayList<>(activeQuestions);
+        for (Question q : temp){
+            q.resume();
+        }
+    }
+
     @Override
     public void run() {
         setRunning(true);
         int questionCount = 0;
         while (isRunning) {
-            int resId = R.drawable.question_mark;
-            long questionTime = 7000; //how long will it be falling?
-            final Question question = new Question(screenWidth, screenHeight, questionTime, gameActivity);
-            activeQuestions.add(question);
-            final AnimatorSet as = question.setData(resId);
-            questionCount++;
 
-            gameActivity.runOnUiThread(as::start);
+            //If-Else is used inside this loop because we need the QuestionMaker to keep making questions throughout the game but not all the time
+            //The times that we don't want any more questions to spawn is when a pop up is on the screen
+            if(GameState.checkPause() == true){
+                try {
+                    Thread.sleep((long) (1000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
-            try {
-                Thread.sleep((long) (getSleepTime()));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            else {
+                int resId = R.drawable.question_mark;
+                long questionTime = 7000; //how long will it be falling?
+                final Question question = new Question(screenWidth, screenHeight, questionTime, gameActivity);
+                activeQuestions.add(question);
+                final AnimatorSet as = question.setData(resId);
+                questionCount++;
+
+                gameActivity.runOnUiThread(as::start);
+
+                try {
+                    Thread.sleep((long) (getSleepTime()));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }

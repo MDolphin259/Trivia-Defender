@@ -37,44 +37,70 @@ public class MissileMaker implements Runnable {
         }
     }
 
+    void pauseMissiles(){
+        ArrayList<Missile> temp = new ArrayList<>(activeMissiles);
+        for (Missile m : temp){
+            m.pause();
+        }
+    }
+
+    void resumeMissiles(){
+        ArrayList<Missile> temp = new ArrayList<>(activeMissiles);
+        for (Missile m : temp){
+            m.resume();
+        }
+    }
+
     @Override
     public void run() {
         setRunning(true);
         int missileCount = 0;
         while (isRunning) {
-            int resId = R.drawable.missile;
-            long missileTime = (long) ((delay * 0.5) + (Math.random() * delay));
-            final Missile missile = new Missile(screenWidth, screenHeight, missileTime, gameActivity);
-            activeMissiles.add(missile);
-            final AnimatorSet as = missile.setData(resId);
-            missileCount++;
 
-            gameActivity.runOnUiThread(as::start);
-
-            try {
-                Thread.sleep((long) (getSleepTime()));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if(missileCount > MISSILES_PER_LEVEL){
-                //TODO: remove this line:
-                gameActivity.stopGame();
-
-                missileCount = 0;
-                delay -= 500;
-                if (delay <= 0)
-                    delay = 1;
-                Log.d(TAG, "run: DELAY: " + delay);
-                //mainActivity.increaseLevel();
+            //If-Else is used inside this loop because we need the MissileMaker to keep making questions throughout the game but not all the time
+            //The times that we don't want any more missiles to spawn is when a pop up is on the screen
+            if(GameState.checkPause() == true){
                 try {
-                    Thread.sleep((long) (SLEEP_BETWEEN_LEVELS));
+                    Thread.sleep((long) (1000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+
+                int resId = R.drawable.missile;
+                long missileTime = (long) ((delay * 0.5) + (Math.random() * delay));
+                final Missile missile = new Missile(screenWidth, screenHeight, missileTime, gameActivity);
+                activeMissiles.add(missile);
+                final AnimatorSet as = missile.setData(resId);
+                missileCount++;
+
+                gameActivity.runOnUiThread(as::start);
+
+                try {
+                    Thread.sleep((long) (getSleepTime()));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-            }
+                if (missileCount > MISSILES_PER_LEVEL) {
+                    //TODO: remove this line:
+                    gameActivity.stopGame();
 
+                    missileCount = 0;
+                    delay -= 500;
+                    if (delay <= 0)
+                        delay = 1;
+                    Log.d(TAG, "run: DELAY: " + delay);
+                    //mainActivity.increaseLevel();
+                    try {
+                        Thread.sleep((long) (SLEEP_BETWEEN_LEVELS));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
         }
     }
 
