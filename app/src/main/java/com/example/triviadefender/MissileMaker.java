@@ -62,9 +62,17 @@ public class MissileMaker implements Runnable {
                 gameActivity.stopGame();
 
                 missileCount = 0;
-                delay -= 500;
+
+                // delay starts at 5000 and delay goes down by 500
+                // gameActivity returns true if score is divisible by 10
+                if (gameActivity.scoreCalc() == true) {
+                    delay -= 500; // ?????
+                    System.out.println(delay);
+                }
+
                 if (delay <= 0)
                     delay = 1;
+
                 Log.d(TAG, "run: DELAY: " + delay);
                 //mainActivity.increaseLevel();
                 try {

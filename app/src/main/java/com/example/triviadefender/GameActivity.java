@@ -123,6 +123,14 @@ public class GameActivity extends AppCompatActivity {
         scoreValue.setText(String.valueOf(score));
     }
 
+    public boolean scoreCalc(){
+        // if score is divisible by 10 --- decrease delay
+        if ((score % 10) == 0 ){
+            return true;
+        }
+        return false;
+    }
+
 
     public void handleTouch(float x2, float y2) {
         double screenPortion = screenHeight*0.8;
