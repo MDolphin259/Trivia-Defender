@@ -176,6 +176,16 @@ public class GameActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    //pauseGame and resumeGame are used as middle man classes for QuestionMaker since it has no access to missileMaker
+    //I thought it would be good to set up this way to not put too much code in GameActivity
+    public void pauseGame(){
+        GameState.callPauseState(missileMaker, questionMaker);
+    }
+
+    public void resumeGame(){
+        GameState.callResumeState(missileMaker, questionMaker);
+    }
+
     public void applyInterceptorHit(CannonFire cannonFire, int id) {
         missileMaker.applyInterceptorBlast(cannonFire, id);
         questionMaker.applyInterceptorBlast(cannonFire, id); //To check if any questions got hit
