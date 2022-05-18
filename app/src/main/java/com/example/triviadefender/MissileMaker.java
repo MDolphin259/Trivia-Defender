@@ -57,45 +57,15 @@ public class MissileMaker implements Runnable {
         int missileCount = 0;
         while (isRunning) {
 
-<<<<<<< HEAD
-            gameActivity.runOnUiThread(as::start);
-
-            try {
-                Thread.sleep((long) (getSleepTime()));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if(missileCount > MISSILES_PER_LEVEL){
-                //TODO: remove this line:
-                gameActivity.stopGame();
-
-                missileCount = 0;
-
-                // delay starts at 5000 and delay goes down by 500
-                // gameActivity returns true if score is divisible by 10
-                if (gameActivity.scoreCalc() == true) {
-                    delay -= 500; // ?????
-                    System.out.println(delay);
-                }
-
-                if (delay <= 0)
-                    delay = 1;
-
-                Log.d(TAG, "run: DELAY: " + delay);
-                //mainActivity.increaseLevel();
-=======
             //If-Else is used inside this loop because we need the MissileMaker to keep making questions throughout the game but not all the time
             //The times that we don't want any more missiles to spawn is when a pop up is on the screen
-            if(GameState.checkPause() == true){
->>>>>>> 5cddb3d57385cd27dd10f52384655f0d1b6d6f22
+            if (GameState.checkPause() == true) {
                 try {
                     Thread.sleep((long) (1000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            else {
+            } else {
 
                 int resId = R.drawable.missile;
                 long missileTime = (long) ((delay * 0.5) + (Math.random() * delay));
@@ -117,7 +87,14 @@ public class MissileMaker implements Runnable {
                     gameActivity.stopGame();
 
                     missileCount = 0;
-                    delay -= 500;
+
+                    // delay starts at 5000 and delay goes down by 500
+                    // gameActivity returns true if score is divisible by 10
+                    if (gameActivity.scoreCalc() == true) {
+                        delay -= 500; // ?????
+                        System.out.println(delay);
+                    }
+
                     if (delay <= 0)
                         delay = 1;
                     Log.d(TAG, "run: DELAY: " + delay);
