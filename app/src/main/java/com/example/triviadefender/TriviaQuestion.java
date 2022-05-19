@@ -8,17 +8,20 @@ public class TriviaQuestion implements java.io.Serializable{
 
     private String question; //The question
     private String correct; //The right answer
+    private String difficulty; //easy, medium, hard
     private ArrayList<String> answers = new ArrayList<String>(); //The other answers including the right answer
 
-    TriviaQuestion(String q, String c, ArrayList<String> a){
+    TriviaQuestion(String q, String c, String difficulty,ArrayList<String> a){
         this.question = formatter(q);
         this.correct = formatter(c);
+        this.difficulty = difficulty;
         for(String choice: a){
             String f = formatter(choice);
             this.answers.add(f);
         }
     }
 
+    public String getDifficulty(){return difficulty;}
     public String getQuestion(){
         return question;
     }

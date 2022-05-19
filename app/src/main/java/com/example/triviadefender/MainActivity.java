@@ -1,10 +1,16 @@
 package com.example.triviadefender;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -20,6 +26,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * The MainActivity is the first screen that the user sees.
@@ -30,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     //create field variable to initialize the difficulty
     public int difficulty = 1;
+    public String categoryId;
 
     public ArrayList<TriviaQuestion> qList = new ArrayList<TriviaQuestion>();
 
@@ -38,6 +48,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Util.getInstance().loadSounds(this);
+        Util.getInstance().populateQuestionsByCategory(this);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+//        MenuItem menuItem = menu.findItem(R.id.category);
+//        SubMenu subMenu = menuItem.getSubMenu();
+//        HashMap<String,String> categories = Util.getInstance().getCatToNum();
+//        for(Map.Entry<String,String> e: categories.entrySet()){
+//            subMenu.add(e.getKey());
+//        }
+        return true;
+    }
+
+    //respond to menu item selection
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                displayHowToPopup();
+                return true;
+
+            case R.id.category:
+                return true;
+
+            default:
+                categoryId = Util.getInstance().getCatToNum().get(item.getTitle());
+                System.out.println(categoryId);
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void displayHowToPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("How to Play");
+        builder.setMessage(R.string.instructions);
+        builder.setCancelable(true);
+        AlertDialog ad = builder.create();
+        ad.show();
     }
 
     public void difficultySelected(View v) {
@@ -70,8 +119,10 @@ public class MainActivity extends AppCompatActivity {
         //Sets up URL for request
         String URL = "https://opentdb.com/api.php";
         Uri.Builder buildURL = Uri.parse(URL).buildUpon();
-        buildURL.appendQueryParameter("amount", "10"); //to set up an amount
-        buildURL.appendQueryParameter("category", "23"); //to set up a category
+        buildURL.appendQueryParameter("amount", "50"); //to set up an amount
+        if(categoryId!=null){
+            buildURL.appendQueryParameter("category", categoryId); //to set up a category
+        }
         String urlToUse = buildURL.build().toString();
         ArrayList<TriviaQuestion> newsList = new ArrayList<TriviaQuestion>();
 
@@ -84,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     for(int i=0; i<triviaQuestions.length(); i++){
                         String q = ((JSONObject)triviaQuestions.get(i)).getString("question");
                         String c = (((JSONObject)triviaQuestions.get(i)).getString("correct_answer"));
+                        String difficulty = (((JSONObject)triviaQuestions.get(i)).getString("difficulty"));
                         JSONArray a = (((JSONObject)triviaQuestions.get(i)).getJSONArray("incorrect_answers"));
                         ArrayList<String> al = new ArrayList<String>();
                         al.add(c);
@@ -92,10 +144,11 @@ public class MainActivity extends AppCompatActivity {
                             al.add(answer);
                         }
                         Collections.shuffle(al);
-                        TriviaQuestion news = new TriviaQuestion(q,c,al);
+                        TriviaQuestion news = new TriviaQuestion(q,c,difficulty,al);
                         newsList.add(news);
                     }
                     //After we are done adding questions, we send the list to be added to qList
+                    Util.getInstance().storeByDifficulty(newsList);
                     addQuestionList(newsList);
                 } catch (Exception e) {
                     System.out.println("Error in response Volley");

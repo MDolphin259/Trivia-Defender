@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Trivia Defender</string>
+    <string name="instructions">\"1. Pick a question category from the dropdown menu. (optional)\n 2. Select the difficulty level.\n 3. The game begins and the goal is to score as many points as possible.\n 4. You get 1 point by shooting a missile, or multiple points by shooting a trivia question and answering the question correctly.\n 5. The game is over if all your 3 canons are destroyed by missiles or incorrect answers.\n 6. Good luck! \"</string>
 </resources>

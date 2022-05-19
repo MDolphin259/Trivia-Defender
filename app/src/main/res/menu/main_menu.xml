@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/category"
+        android:icon="@android:drawable/arrow_down_float"
+        android:title="category"
+        android:visible="true"
+        app:showAsAction="always">
+
+
+        <menu>
+
+            <item
+                android:id="@+id/general_knowledge"
+                android:title="General Knowledge"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_books"
+                android:title="Entertainment: Books"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_film"
+                android:title="Entertainment: Film"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_music"
+                android:title="Entertainment: Music"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_musicalsandtheatres"
+                android:title="Entertainment: Musicals &amp; Theatres"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_television"
+                android:title="Entertainment: Television"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_video_games"
+                android:title="Entertainment: Video Games"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_board_games"
+                android:title="Entertainment: Board Games"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/science_nature"
+                android:title="Science &amp; Nature"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/science_mathematics"
+                android:title="Science: Mathematics"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/science_computers"
+                android:title="Science: Computers"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/mythology"
+                android:title="Mythology"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/sports"
+                android:title="Sports"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/geography"
+                android:title="Geography"
+                android:visible="true"
+                />
+
+            <item
+                android:id="@+id/art"
+                android:title="Art"
+                android:visible="true"
+                />
+
+            <item
+                android:id="@+id/history"
+                android:title="History"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/politics"
+                android:title="Politics"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/celebrities"
+                android:title="Celebrities"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/animals"
+                android:title="Animals"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/vehicles"
+                android:title="Vehicles"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_comics"
+                android:title="Entertainment: Comics"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/science_gadgets"
+                android:title="Science: Gadgets"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_japanese_anime_manga"
+                android:title="Entertainment: Japanese Anime &amp; Manga"
+                android:visible="true"
+                />
+            <item
+                android:id="@+id/entertainment_cartoon_animations"
+                android:title="Entertainment: Cartoon &amp; Animations"
+                android:visible="true"
+                />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/about"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="about"
+        android:visible="true"
+        app:showAsAction="always" />
+</menu>

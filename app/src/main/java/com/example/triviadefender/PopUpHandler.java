@@ -39,9 +39,17 @@ public class PopUpHandler {
         AlertDialog.Builder ab = new AlertDialog.Builder(ga);
 
         //Selects a random question to use
-        int index = new Random().nextInt(tql.size() - 1);
-        TriviaQuestion puq = tql.get(index);;
 
+        TriviaQuestion puq;
+        double probability = Math.random();
+        if(probability<0.1){
+            puq = Util.difficultyToQuestionList.get("hard").get(new Random().nextInt(Util.difficultyToQuestionList.get("hard").size() - 1));
+        }else if(probability<0.35){
+            puq = Util.difficultyToQuestionList.get("medium").get(new Random().nextInt(Util.difficultyToQuestionList.get("medium").size() - 1));
+        }else{
+            puq = Util.difficultyToQuestionList.get("easy").get(new Random().nextInt(Util.difficultyToQuestionList.get("easy").size() - 1));
+        }
+        System.out.println(puq.getDifficulty());
         //Used to make an array from an ArrayList since that is what the pop up methods for android uses
         String[] answers = new String[puq.getAnswers().size()];
         for(int i = 0; i < puq.getAnswers().size(); i++){
@@ -50,15 +58,16 @@ public class PopUpHandler {
         ab.setTitle(puq.getQuestion());
 
         //This section is to handle when Players choose one of the options in the trivia question
+        TriviaQuestion finalPuq = puq;
         ab.setItems(answers, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which){ //USed to handle which item was selected
                 String item = answers[which];
 
-                String results = item + " is Wrong. The answer is " + puq.getCorrect();
+                String results = item + " is Wrong. The answer is " + finalPuq.getCorrect();
 
                 //if answer to question is correct --- call incrementScore
-                if(item.equals(puq.getCorrect()) == true){
+                if(item.equals(finalPuq.getCorrect()) == true){
                     results = item + " is Correct!";
                     ga.incrementScore(false);
                 }
