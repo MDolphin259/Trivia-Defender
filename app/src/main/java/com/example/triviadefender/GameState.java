@@ -25,6 +25,13 @@ public class GameState {
         changeState();
     }
 
+    //Resets GameState variable if game ends on a pop up
+    public static void resetGameState(){
+        if(pause == true){
+            changeState();
+        }
+    }
+
     //Changes the state of the game
     private static void changeState(){
         if(pause == true){
