@@ -1,6 +1,7 @@
 package com.example.triviadefender;
 
 import android.content.DialogInterface;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -72,6 +73,7 @@ public class PopUpHandler {
                     ga.incrementScore(false);
                 }
 
+
                 System.out.println(results);
                 callSecond(results, ga);
             }
@@ -95,6 +97,12 @@ public class PopUpHandler {
             public void onClick(DialogInterface dialogInterface, int i) {
                 ga.resumeGame(); //After a player presses okay the pop up is gone so we need to resume projectiles
                 popUpActive = false;
+                if (results.contains("Wrong")) {
+                    ArrayList<ImageView> activeCannons = ga.getActiveCannons();
+                    //ImageView unluckyCannon = activeCannons.get(0);
+                    ga.getLayout().removeView(activeCannons.get(0));
+                    activeCannons.remove(0);
+                }
             }
         });
 
