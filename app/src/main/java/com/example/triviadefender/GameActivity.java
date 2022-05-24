@@ -54,9 +54,9 @@ public class GameActivity extends AppCompatActivity {
         System.out.println("---------------------HHEEELLLOOOO-------------------------");
 
         //Gets the Questions from the intent
-        ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
-        System.out.println("Questions Loaded: " + ql.size());
-        PopUpHandler.setTrivia(ql); //retrieves the question list
+        //ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
+        //System.out.println("Questions Loaded: " + ql.size());
+        //PopUpHandler.setTrivia(ql); //retrieves the question list
 
         Util util = Util.getInstance();
         util.fullScreenMode(this);
