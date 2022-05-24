@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.util.Log;
 import android.widget.ImageView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MissileMaker implements Runnable {
@@ -19,9 +20,6 @@ public class MissileMaker implements Runnable {
     private int MISSILES_PER_LEVEL = 10;
     private static final int SLEEP_BETWEEN_LEVELS = 2000;
     private long delay = 5000;
-
-
-    public static ArrayList<ImageView> bases = new ArrayList<>();
 
     MissileMaker(GameActivity gameActivity, int screenWidth, int screenHeight) {
         this.gameActivity = gameActivity;
@@ -121,14 +119,16 @@ public class MissileMaker implements Runnable {
 
         Log.d(TAG, "applyMissileBlast: -------------------------- " + id);
 
+        //Get the available cannons from gameActivity where they were initialized
+        ArrayList<ImageView> activeCannons = gameActivity.getActiveCannons();
+
         float x1 = missile.getX();
         float y1 = missile.getY();
 
         Log.d(TAG, "applyMissileBlast: MISSILE: " + x1 + ", " + y1);
-
         ImageView baseToRemove = null;
-        for (ImageView iv : bases) {
 
+        for (ImageView iv : activeCannons) {
             //Get size of the base image
             float x2 = (int) (iv.getX() + (0.5 * iv.getWidth()));
             float y2 = (int) (iv.getY() + (0.5 * iv.getHeight()));
@@ -153,9 +153,9 @@ public class MissileMaker implements Runnable {
         if (baseToRemove == null) {
             SoundPlayer.getInstance().start("missile_miss");
         } else {
-            bases.remove(baseToRemove);
+            activeCannons.remove(baseToRemove);
             /*
-            if(bases.size()<1){
+            if(activeCannons.size()<1){
                 gameActivity.gameOver();
             }
             */

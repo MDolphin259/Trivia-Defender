@@ -182,4 +182,7 @@ public class GameActivity extends AppCompatActivity {
         missileMaker.applyInterceptorBlast(cannonFire, id);
         questionMaker.applyInterceptorBlast(cannonFire, id); //To check if any questions got hit
     }
+    public ArrayList<ImageView> getActiveCannons() {
+        return activeCannons;
+    }
 }
