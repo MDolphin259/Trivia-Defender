@@ -18,8 +18,9 @@ public class GameOverActivity extends AppCompatActivity {
 
     //This is the method that will send Users back from a game over page to a home page
     public void sendMessage(View view){
-        PopUpHandler.endPreviousGame(); //TODO: Will bring up with later update
-        //TODO: Questions do not pop up when remaining missiles have not done animation after game is over. Probably got to activate cancel animator
+        GameState.resetGameState();
+        PopUpHandler.endPreviousGame();
+        Util.difficultyToQuestionList.clear();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

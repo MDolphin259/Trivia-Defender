@@ -2,6 +2,8 @@ package com.example.triviadefender;
 
 import android.content.DialogInterface;
 import android.widget.ImageView;
+import android.graphics.Color;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -20,10 +22,9 @@ public class PopUpHandler {
     }
 
     //Gets the list of Trivia Questions as its own
-    public static void setTrivia(ArrayList<TriviaQuestion> ql){
+    /*public static void setTrivia(ArrayList<TriviaQuestion> ql){
         tql = ql;
-        System.out.println("Questions Loaded: " + ql.size());
-    }
+    }*/
 
     //Method to activate a popup. This also checks if another pop up is active already
     //We check if a pop up is already active so that a User does not deal with a case that they are spammed with pop ups
@@ -56,7 +57,14 @@ public class PopUpHandler {
         for(int i = 0; i < puq.getAnswers().size(); i++){
             answers[i] = puq.getAnswers().get(i);
         }
-        ab.setTitle(puq.getQuestion());
+
+        //Make Title
+        TextView tv = new TextView(ga);
+        tv.setText(puq.getQuestion());
+        tv.setTextSize(20);
+        tv.setPadding(40,40,10,10);
+        tv.setTextColor(Color.BLACK);
+        ab.setCustomTitle(tv);
 
         //This section is to handle when Players choose one of the options in the trivia question
         TriviaQuestion finalPuq = puq;

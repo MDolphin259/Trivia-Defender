@@ -54,9 +54,9 @@ public class GameActivity extends AppCompatActivity {
         System.out.println("---------------------HHEEELLLOOOO-------------------------");
 
         //Gets the Questions from the intent
-        ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
-        System.out.println("Questions Loaded: " + ql.size());
-        PopUpHandler.setTrivia(ql); //retrieves the question list
+        //ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
+        //System.out.println("Questions Loaded: " + ql.size());
+        //PopUpHandler.setTrivia(ql); //retrieves the question list
 
         Util util = Util.getInstance();
         util.fullScreenMode(this);
@@ -122,6 +122,14 @@ public class GameActivity extends AppCompatActivity {
         //Log to the console
         Log.i("score",String.valueOf(score));
         scoreValue.setText(String.valueOf(score));
+    }
+
+    public boolean scoreCalc(){
+        // if score is divisible by 10 --- decrease delay
+        if ((score % 10) == 0 ){
+            return true;
+        }
+        return false;
     }
 
 
