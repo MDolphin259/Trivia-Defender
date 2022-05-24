@@ -19,7 +19,9 @@ public class MissileMaker implements Runnable {
     private static final int NUM_LEVELS = 20;
     private int MISSILES_PER_LEVEL = 10;
     private static final int SLEEP_BETWEEN_LEVELS = 2000;
-    private long delay = 5000;
+
+    //finding delay after we run
+    private long delay;
 
     MissileMaker(GameActivity gameActivity, int screenWidth, int screenHeight) {
         this.gameActivity = gameActivity;
@@ -53,6 +55,13 @@ public class MissileMaker implements Runnable {
     public void run() {
         setRunning(true);
         int missileCount = 0;
+        int currentDifficulty = gameActivity.getDifficulty();
+        if (currentDifficulty == 1)
+            delay = 5000;
+        if (currentDifficulty == 2)
+            delay = 3700;
+        if (currentDifficulty == 3)
+            delay = 2500;
         while (isRunning) {
 
             //If-Else is used inside this loop because we need the MissileMaker to keep making questions throughout the game but not all the time

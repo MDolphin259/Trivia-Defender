@@ -51,6 +51,7 @@ public class GameActivity extends AppCompatActivity {
          Intent i = getIntent();
          questionMarkScore = i.getIntExtra("DIFFICULTY",1);
          System.out.println(questionMarkScore);
+        System.out.println("---------------------HHEEELLLOOOO-------------------------");
 
         //Gets the Questions from the intent
         ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
@@ -184,5 +185,10 @@ public class GameActivity extends AppCompatActivity {
     }
     public ArrayList<ImageView> getActiveCannons() {
         return activeCannons;
+    }
+    public int getDifficulty() {
+            Intent i = getIntent();
+            int difficulty = i.getIntExtra("DIFFICULTY",1);
+            return difficulty;
     }
 }
