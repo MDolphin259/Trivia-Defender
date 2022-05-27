@@ -110,6 +110,9 @@ public class PopUpHandler {
                     //ImageView unluckyCannon = activeCannons.get(0);
                     ga.getLayout().removeView(activeCannons.get(0));
                     activeCannons.remove(0);
+                    if(activeCannons.size()<1){
+                        ga.stopGame();
+                    }
                 }
             }
         });
@@ -123,6 +126,10 @@ public class PopUpHandler {
     //When the game is over, we want to change this variable back to false in case Players want to play again
     public static void endPreviousGame(){
         popUpActive = false;
+    }
+
+    public static boolean getPopUpStatus(){
+        return popUpActive;
     }
 
 }

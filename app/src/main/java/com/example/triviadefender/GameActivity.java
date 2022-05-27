@@ -174,6 +174,7 @@ public class GameActivity extends AppCompatActivity {
         questionMaker.setRunning(false);
         missileMaker.setRunning(false);
         Intent i = new Intent(GameActivity.this, GameOverActivity.class);
+        i.putExtra("SCORE", score);
         startActivity(i);
     }
 
@@ -199,4 +200,11 @@ public class GameActivity extends AppCompatActivity {
             int difficulty = i.getIntExtra("DIFFICULTY",1);
             return difficulty;
     }
+
+    /*public void gameOver(){
+        Intent i = new Intent(GameActivity.this, GameOverActivity.class);
+        //TODO: send the difficulty level setup to GameActivity.class
+        i.putExtra("SCORE", score);
+        startActivity(i);
+    }*/
 }
