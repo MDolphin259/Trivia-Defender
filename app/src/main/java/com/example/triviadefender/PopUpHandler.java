@@ -128,5 +128,9 @@ public class PopUpHandler {
         popUpActive = false;
     }
 
+    public static boolean getPopUpStatus(){
+        return popUpActive;
+    }
+
 }
 
