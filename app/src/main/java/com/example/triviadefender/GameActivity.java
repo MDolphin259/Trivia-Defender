@@ -26,7 +26,7 @@ public class GameActivity extends AppCompatActivity {
     private int score = 0;
     private boolean allBasesGone;
     private int questionMarkScore;
-    private int previous10 = 0;
+    private int previous10 = 10;
 
     //Instantiate list of available cannons
     public static ArrayList<ImageView> activeCannons = new ArrayList<>();
