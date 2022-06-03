@@ -89,18 +89,17 @@ public class MissileMaker implements Runnable {
                     e.printStackTrace();
                 }
 
+                // delay starts at 5000 and delay goes down by 500
+                // gameActivity returns true if score is divisible by 10
+                if (gameActivity.scoreCalc() == true) {
+                    delay -= 500; // ?????
+                    System.out.println(delay);
+                }
+
                 if (missileCount > MISSILES_PER_LEVEL) {
                     //TODO: remove this line:
-                    gameActivity.stopGame();
 
                     missileCount = 0;
-
-                    // delay starts at 5000 and delay goes down by 500
-                    // gameActivity returns true if score is divisible by 10
-                    if (gameActivity.scoreCalc() == true) {
-                        delay -= 500; // ?????
-                        System.out.println(delay);
-                    }
 
                     if (delay <= 0)
                         delay = 1;
@@ -169,11 +168,11 @@ public class MissileMaker implements Runnable {
             SoundPlayer.getInstance().start("missile_miss");
         } else {
             activeCannons.remove(baseToRemove);
-            /*
+
             if(activeCannons.size()<1){
-                gameActivity.gameOver();
+                gameActivity.stopGame();
             }
-            */
+
         }
     }
 

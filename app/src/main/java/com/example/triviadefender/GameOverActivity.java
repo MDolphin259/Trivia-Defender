@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.triviadefender.R;
-
 public class GameOverActivity extends AppCompatActivity {
 
     @Override
@@ -22,6 +20,7 @@ public class GameOverActivity extends AppCompatActivity {
         PopUpHandler.endPreviousGame();
         Util.difficultyToQuestionList.clear();
         Intent intent = new Intent(this, MainActivity.class);
+        FirebaseAnalyticsSender.playAgainPressed(this);
         startActivity(intent);
     }
 }

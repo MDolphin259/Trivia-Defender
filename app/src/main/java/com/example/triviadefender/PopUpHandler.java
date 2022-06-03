@@ -110,6 +110,9 @@ public class PopUpHandler {
                     //ImageView unluckyCannon = activeCannons.get(0);
                     ga.getLayout().removeView(activeCannons.get(0));
                     activeCannons.remove(0);
+                    if(activeCannons.size()<1){
+                        ga.stopGame();
+                    }
                 }
             }
         });
