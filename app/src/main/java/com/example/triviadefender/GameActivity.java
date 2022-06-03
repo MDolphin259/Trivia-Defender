@@ -108,8 +108,6 @@ public class GameActivity extends AppCompatActivity {
     //method to increment the score using a boolean flag to
     //detect type of icon object
     public void incrementScore(boolean missileFlag){
-
-
         //if bullet collides with missile
         if (missileFlag == true) {
             score += 1;
@@ -144,8 +142,6 @@ public class GameActivity extends AppCompatActivity {
 
         //interceptor count refers to the number of active shots fired at missiles
         //Is reduced if the shot connects with a missile
-
-
         if(activeShotCount>2) return;
         ImageView closestCannon = null;
         float maxDistance = Float.MAX_VALUE;
@@ -175,6 +171,16 @@ public class GameActivity extends AppCompatActivity {
     public void stopGame() {
         questionMaker.setRunning(false);
         missileMaker.setRunning(false);
+
+        ScoreServerCaller.ScoreSend(score);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ScoreServerCaller.ScoresRetrieve(GameActivity.this);
+
+        //TODO: May need to move 2 lines into a new function that waits for the threads used to talk to Score API
         Intent i = new Intent(GameActivity.this, GameOverActivity.class);
         startActivity(i);
     }
