@@ -42,5 +42,11 @@ public class GameState {
         }
     }
 
+    public static void testGameState(boolean test){
+        if(test == true){
+            changeState();
+        }
+    }
+
 
 }

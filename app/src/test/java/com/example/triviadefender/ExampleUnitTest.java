@@ -14,4 +14,12 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void GameStateChange(){
+        GameState.testGameState(true);
+        assertEquals(GameState.checkPause(), true);
+        GameState.testGameState(true);
+        assertEquals(GameState.checkPause(), false);
+    }
 }
