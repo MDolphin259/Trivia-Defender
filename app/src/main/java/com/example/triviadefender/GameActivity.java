@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
     private int score = 0;
     private boolean allBasesGone;
     private int questionMarkScore;
+    private int previous10 = 10;
 
     //Instantiate list of available cannons
     public static ArrayList<ImageView> activeCannons = new ArrayList<>();
@@ -64,6 +65,8 @@ public class GameActivity extends AppCompatActivity {
         screenHeight = swh.getHeight();
         screenWidth = swh.getWidth();
         layout = findViewById(R.id.gameLayout);
+
+        System.out.println(previous10);
 
         //Print score text to the screen -- using activity_game.xml
         scoreText = (TextView) findViewById(R.id.scoreText);
@@ -125,8 +128,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public boolean scoreCalc(){
-        // if score is divisible by 10 --- decrease delay
-        if ((score % 10) == 0 ){
+        // if score is above the next interval of 10, decrease delay
+        if (score >= previous10) {
+            previous10 += 10;
             return true;
         }
         return false;
@@ -158,7 +162,6 @@ public class GameActivity extends AppCompatActivity {
         if(closestCannon!=null){
             Log.d(TAG, "handleTouch: " + maxDistance);
             CannonFire i = new CannonFire(this,  (float) (closestCannon.getX()), (float) (closestCannon.getY() - 30), x2, y2);
-            System.out.println("HELLO THIS IS WHAT YOU'RE LOOKING FOR " + i);
             SoundPlayer.getInstance().start("launch_interceptor");
             i.launch();
 
@@ -169,7 +172,6 @@ public class GameActivity extends AppCompatActivity {
         return allBasesGone;
     }
 
-    //TODO: remove this so that the game end by itself
     public void stopGame() {
         questionMaker.setRunning(false);
         missileMaker.setRunning(false);

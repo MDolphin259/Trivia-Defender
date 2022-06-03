@@ -97,8 +97,6 @@ public class MissileMaker implements Runnable {
                 }
 
                 if (missileCount > MISSILES_PER_LEVEL) {
-                    //TODO: remove this line:
-                    //gameActivity.stopGame();
 
                     missileCount = 0;
 

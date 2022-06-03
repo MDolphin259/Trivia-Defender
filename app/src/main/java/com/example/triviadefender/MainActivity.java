@@ -3,14 +3,12 @@ package com.example.triviadefender;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -26,9 +24,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 /**
  * The MainActivity is the first screen that the user sees.
@@ -193,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO: send the difficulty level setup to GameActivity.class
         i.putExtra("DIFFICULTY", difficulty);
         i.putExtra("QUESTIONS", qList); //sends the list of trivia questions to the GameActivity
+        FirebaseAnalyticsSender.sendOpened(this);
         startActivity(i);
     }
 }
