@@ -12,30 +12,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="Top Scores"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/ScoreList"
-        android:layout_width="667dp"
-        android:layout_height="214dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="349dp"
+        android:layout_height="195dp"
+        android:layout_marginStart="28dp"
         android:text="ScoreList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.376" />
+        app:layout_constraintVertical_bias="0.161" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="292dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="40dp"
         android:onClick="sendMessage"
         android:text="Play Again"
         app:layout_constraintStart_toStartOf="parent"
