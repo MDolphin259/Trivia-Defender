@@ -2,6 +2,8 @@ package com.example.triviadefender;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +23,7 @@ public class GameOverTest {
 
     @Test
     public void playAgainButtonTest(){
-        onView(withId(R.id.button)).perform(click());
+        onView(withId(R.id.button)).perform(closeSoftKeyboard());
         assertEquals(PopUpHandler.getPopUpStatus(), false);
     }
 

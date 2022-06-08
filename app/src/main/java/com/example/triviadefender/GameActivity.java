@@ -10,11 +10,11 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class GameActivity extends AppCompatActivity {
     public static int screenHeight;
@@ -27,6 +27,9 @@ public class GameActivity extends AppCompatActivity {
     private boolean allBasesGone;
     private int questionMarkScore;
     private int previous10 = 10;
+    private long start;
+    private long finish;
+    private String categoryID;
 
     //Instantiate list of available cannons
     public static ArrayList<ImageView> activeCannons = new ArrayList<>();
@@ -37,6 +40,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        start = System.nanoTime();
 
         //Instantiate cannons on create
         ImageView cannon1 = findViewById(R.id.Cannon1);
@@ -53,6 +58,8 @@ public class GameActivity extends AppCompatActivity {
          questionMarkScore = i.getIntExtra("DIFFICULTY",1);
          System.out.println(questionMarkScore);
         System.out.println("---------------------HHEEELLLOOOO-------------------------");
+
+        categoryID = i.getStringExtra("CATEGORY");
 
         //Gets the Questions from the intent
         //ArrayList<TriviaQuestion> ql = (ArrayList<TriviaQuestion>) i.getSerializableExtra("QUESTIONS");
@@ -108,8 +115,6 @@ public class GameActivity extends AppCompatActivity {
     //method to increment the score using a boolean flag to
     //detect type of icon object
     public void incrementScore(boolean missileFlag){
-
-
         //if bullet collides with missile
         if (missileFlag == true) {
             score += 1;
@@ -144,8 +149,6 @@ public class GameActivity extends AppCompatActivity {
 
         //interceptor count refers to the number of active shots fired at missiles
         //Is reduced if the shot connects with a missile
-
-
         if(activeShotCount>2) return;
         ImageView closestCannon = null;
         float maxDistance = Float.MAX_VALUE;
@@ -175,8 +178,29 @@ public class GameActivity extends AppCompatActivity {
     public void stopGame() {
         questionMaker.setRunning(false);
         missileMaker.setRunning(false);
-        Intent i = new Intent(GameActivity.this, GameOverActivity.class);
-        startActivity(i);
+
+        finish = System.nanoTime();
+        long time = finish - start;
+        long convert = TimeUnit.SECONDS.convert(time, TimeUnit.NANOSECONDS);
+        System.out.println("TIME in Seconds: " + convert);
+
+        ScoreRecord sr = new ScoreRecord();
+        sr.setScore(score);
+        sr.setTime(convert + " seconds");
+        sr.setCategory(categoryID);
+        sr.setDifficulty(questionMarkScore);
+
+        ScoreServerCaller.ScoreSend(sr);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ScoreServerCaller.ScoresRetrieve(GameActivity.this);
+
+        //TODO: May need to move 2 lines into a new function that waits for the threads used to talk to Score API
+        //Intent i = new Intent(GameActivity.this, GameOverActivity.class);
+        //startActivity(i);
     }
 
     //pauseGame and resumeGame are used as middle man classes for QuestionMaker since it has no access to missileMaker
@@ -200,5 +224,11 @@ public class GameActivity extends AppCompatActivity {
             Intent i = getIntent();
             int difficulty = i.getIntExtra("DIFFICULTY",1);
             return difficulty;
+    }
+
+    public void gameOverTransition(ArrayList<ScoreRecord> ScoreList){
+        Intent i = new Intent(GameActivity.this, GameOverActivity.class);
+        i.putExtra("SCORES", ScoreList);
+        startActivity(i);
     }
 }

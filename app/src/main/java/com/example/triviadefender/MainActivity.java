@@ -188,6 +188,10 @@ public class MainActivity extends AppCompatActivity {
         //TODO: send the difficulty level setup to GameActivity.class
         i.putExtra("DIFFICULTY", difficulty);
         i.putExtra("QUESTIONS", qList); //sends the list of trivia questions to the GameActivity
+        if(categoryId == null){
+            categoryId = "-1";
+        }
+        i.putExtra("CATEGORY", categoryId);
         FirebaseAnalyticsSender.sendOpened(this);
         startActivity(i);
     }
