@@ -40,7 +40,6 @@ public class ScoreServerCaller {
         eapi.getScores().enqueue(new Callback<List<ScoreRecord>>() {
             @Override
             public void onResponse(Call<List<ScoreRecord>> call, retrofit2.Response<List<ScoreRecord>> response) {
-                System.out.println(response.body().size());
                 for(ScoreRecord i : response.body()){
                     System.out.println("SCORE: " + i.getScore());
                     System.out.println("CATEGORY: " + i.getCategory());
